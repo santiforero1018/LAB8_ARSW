@@ -13,7 +13,7 @@ var app = (function () {
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI);
         ctx.stroke();
     };
 
@@ -42,7 +42,9 @@ var app = (function () {
                 var x = theObject.x;
                 var y = theObject.y;
 
-                alert("Coordenada x: "+x+", Coordenarda y: "+y);
+                // alert("Coordenada x: "+x+", Coordenarda y: "+y);
+
+                addPointToCanvas(new Point(x,y));
             });
         });
 
