@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pizarra Compartida</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pizarra Compartida</h1>
+    <label for="roomId">ID de la sala:</label>
+    <input type="text" id="roomId" placeholder="Ingrese el ID de la sala">
+    <button onclick="connectToRoom()">Conectar</button>
+    <hr>
+    <label for="xCoord">X:</label>
+    <input type="number" id="xCoord" placeholder="Coordenada X">
+    <label for="yCoord">Y:</label>
+    <input type="number" id="yCoord" placeholder="Coordenada Y">
+    <button onclick="drawPoint()">Dibujar punto</button>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        const stompClient = Stomp.over(new SockJS("/stompendpoint"));
+        let roomId;
+
+        function connectToRoom() {
+            roomId = document.getElementById("roomId").value;
+            if (roomId) {
+                stompClient.connect({}, function (frame) {
+                    console.log("Conectado: " + frame);
+                    stompClient.subscribe(`/topic/room.${roomId}`, function (message) {
+                        const point = JSON.parse(message.body);
+                        drawPoint(point.x, point.y);
+                    });
+                });
+            }
+        }
+
+        function drawPoint() {
+            const x = parseFloat(document.getElementById("xCoord").value);
+            const y = parseFloat(document.getElementById("yCoord").value);
+
+            if (!isNaN(x) && !isNaN(y) && stompClient.connected) {
+                drawPointOnCanvas(x, y);
+                stompClient.send(`/app/room.${roomId}`, {}, JSON.stringify({ x, y }));
+            }
+        }
+
+        function drawPointOnCanvas(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+    </script>
+</body>
+</html>

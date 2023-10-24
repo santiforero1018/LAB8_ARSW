@@ -23,19 +23,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
         <script src="/webjars/sockjs-client/sockjs.min.js"></script>
         <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-        <script src="/app.js"></script>
+        <script src="app.js"></script>
+        <link rel="stylesheet" href="p.css" />
 
     </head>
 
 
     
     <body onload="app.init()">
-        X:<input id="x" type="number"/>
-        Y:<input id="y" type="number"/>
-        <button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
-        <canvas id="canvas" width="800" height="600"></canvas>
-
-        Paint Id: <input type="number" id="pId">       
+        <label for="pId">ID de la sala: </label>
+        <input type="number" id="pId">       
         <button onclick="app.connectAndSubscribe()">connect</button>
+        <label for="x">X: </label>
+        <input id="x" type="number"/>
+        <label for="y">Y: </label>
+        <input id="y" type="number"/>
+        <button onclick="app.publishPoint($('#x').val(),$('#y').val())">Send point</button>
+        <canvas id="canvas" width="800" height="600" ></canvas>
+
+        
     </body>
 </html>
