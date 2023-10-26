@@ -10,14 +10,64 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(61, 55, 55);
+    background: url("fondo.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-#canvas{
-    border: 2px solid red;
-    
+
+@keyframes animateBg {
+    100% {
+        filter: hue-rotate(360deg);
+    }
 }
+#canvas {
+    touch-action: none;
+    margin-top: 1%;
+    border: 2px solid white;
+    background-color: black;
+    animation: animateBg 5s linear infinite;
+}
+
+input {
+    position: flex;
+    width: 30%;
+    height: 40px;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 7px;
+    outline: none;
+    font-size: 1.5em;
+    color: #fff;
+}
+
 
 label{
-    color: black;
+    color: white;
+}
+
+button,label,input{
+    margin-top: 2%;
+}
+
+button {
+    width: 200px;
+    height: 40px;
+    background: rgba(255, 255, 255, .5);
+    margin-top: 0.5%;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+    transition: all .3s;
+    animation: animateBg 5s linear infinite;
+}
+
+button:hover{
+    height: 45px;
+    background-color: blue !important;
+    color: red !important;
+    font-size: 1.2em;
 }
